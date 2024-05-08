@@ -109,7 +109,7 @@ export class MorphWebService {
         return 'FLORES';
       case 'Las Toscas Shopping'.toUpperCase():
         return 'LAS TOSCAS';
-      case 'Lomitas'.toUpperCase():
+      case 'Lomitas Street'.toUpperCase():
         return 'LOMITAS';
       case 'Paseo Aldrey'.toUpperCase():
         return 'MDQ';
@@ -121,7 +121,7 @@ export class MorphWebService {
         return 'ROSARIO';
       case 'Microcentro'.toUpperCase():
         return 'SARMIENTO';
-      case 'Shopping del Siglo'.toUpperCase():
+      case 'Shoppin del Siglo'.toUpperCase():
         return 'SIGLO';
       case 'Solar'.toUpperCase():
         return 'SOLAR';
