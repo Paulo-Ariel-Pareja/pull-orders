@@ -121,7 +121,7 @@ export class MorphWebService {
         return 'ROSARIO';
       case 'Microcentro'.toUpperCase():
         return 'SARMIENTO';
-      case 'Shoppin del Siglo'.toUpperCase():
+      case 'Shopping del Siglo'.toUpperCase():
         return 'SIGLO';
       case 'Solar'.toUpperCase():
         return 'SOLAR';
