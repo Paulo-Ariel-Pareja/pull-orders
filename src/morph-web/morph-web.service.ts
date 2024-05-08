@@ -68,23 +68,24 @@ export class MorphWebService {
         fecha_estado: dayjs().format(),
         factura: '',
         id_cliente: '',
+        descuento_compra: order.discount ? Number(order.discount) : 0,
       };
 
       for (let index = 0; index < order.products.length; index++) {
         console.log('index: ', index);
         const product: Product = order.products[index];
+        const subTotal = Number(product.price) * product.quantity;
         const productInfo = {
           codigo: product.sku.substring(0, 8),
           descripcion: product.name.substring(0, 90),
           cantidad: product.quantity,
-          sub_total: Number(product.compare_at_price),
-          descuento_compra:
-            Number(product.compare_at_price) - Number(product.price),
+          sub_total: subTotal,
         };
         let newRow = new MorphWeb();
         newRow = { ...base, ...productInfo };
         await this.db.save(newRow);
         base.costo_envio = 0;
+        base.descuento_compra = 0;
       }
     } catch (error) {
       this.logger.error(error);
