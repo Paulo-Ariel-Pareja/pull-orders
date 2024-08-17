@@ -80,7 +80,6 @@ export class TiendaNubeService {
         Authentication: `bearer ${this.bearer}`,
       },
     };
-    //const url = `https://api.tiendanube.com/v1/${this.userId}/orders?status=${status}&payment_status=paid&shipping_status=unpacked&per_page=${this.perPage}`;
     const url = `https://api.tiendanube.com/v1/${this.userId}/orders?status=${status}&payment_status=${payment}&shipping_status=${shipping}&per_page=${this.perPage}`;
     const { data } = await firstValueFrom(
       this.httpService.get<Order[]>(url, headersRequest).pipe(
