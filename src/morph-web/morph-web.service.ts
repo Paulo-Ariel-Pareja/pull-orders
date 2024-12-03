@@ -101,6 +101,14 @@ export class MorphWebService {
     let sucursal = 'VERIFICAR';
     if (!opcion) return sucursal;
     switch (opcion.substring(17).toUpperCase()) {
+      case 'Devoto'.toUpperCase():
+        return 'DEVOTO';
+      case 'Solar'.toUpperCase():
+        return 'SOLAR';
+      case 'Pickit'.toUpperCase():
+        return 'PICKIT';
+      case 'Envío Nube - Correo Argentino'.toUpperCase():
+        return 'CORREO ARGENTINO';
       case 'Caballito'.toUpperCase():
         return 'CABALLITO';
       case 'Patio Olmos'.toUpperCase():
@@ -141,7 +149,7 @@ export class MorphWebService {
         ) {
           const cp = zipcode ? Number(zipcode) : 0;
           if (cp <= 1499 && cp >= 1000) return 'ENVIO POMAR';
-          return 'MERCOSUR ';
+          return 'MERCOSUR';
         }
         break;
     }
