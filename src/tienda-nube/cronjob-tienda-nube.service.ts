@@ -18,7 +18,7 @@ export class CronjobTiendaNubeService {
   ) {}
 
   //@Cron('* * * * *')
-  @Cron('*/5 * * * 1-5')
+  //@Cron('*/5 * * * 1-5')
   async handleCron() {
     try {
       this.logger.debug('obtener operaciones en tienda nube');

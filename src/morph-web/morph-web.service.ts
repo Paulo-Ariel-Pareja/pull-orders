@@ -3,8 +3,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as dayjs from 'dayjs';
 
-import { Order, Product } from 'src/interface/order.interface';
+import { Order, Product } from '../interface/order.interface';
 import { MorphWeb } from './entities/morph-web.entity';
+import { Notificaciones } from './entities/notificaciones.entity';
+import { Web } from './entities/web.entity';
 
 @Injectable()
 export class MorphWebService {
@@ -12,7 +14,13 @@ export class MorphWebService {
 
   constructor(
     @InjectRepository(MorphWeb)
-    private db: Repository<MorphWeb>,
+    private aprobacionDb: Repository<MorphWeb>,
+
+    @InjectRepository(Notificaciones)
+    private notificacionesDb: Repository<Notificaciones>,
+
+    @InjectRepository(Web)
+    private webDb: Repository<Web>,
   ) {}
 
   async create(order: Order) {
@@ -83,12 +91,13 @@ export class MorphWebService {
         };
         let newRow = new MorphWeb();
         newRow = { ...base, ...productInfo };
-        await this.db.save(newRow);
+        await this.aprobacionDb.save(newRow);
         base.costo_envio = 0;
         base.descuento_compra = 0;
       }
     } catch (error) {
       this.logger.error(error);
+      throw error;
     }
   }
 
@@ -100,15 +109,19 @@ export class MorphWebService {
   private pickSucursal(opcion: string, zipcode: string): string {
     let sucursal = 'VERIFICAR';
     if (!opcion) return sucursal;
-    switch (opcion.substring(17).toUpperCase()) {
-      case 'Devoto'.toUpperCase():
-        return 'DEVOTO';
-      case 'Solar'.toUpperCase():
-        return 'SOLAR';
-      case 'Pickit'.toUpperCase():
+
+    switch (opcion.toUpperCase()) {
+      case 'Pickit - Envio a domicilio':
         return 'PICKIT';
-      case 'Envío Nube - Correo Argentino'.toUpperCase():
+      case 'Punto de retiro':
         return 'CORREO ARGENTINO';
+    }
+
+    switch (opcion.substring(17).toUpperCase()) {
+      case 'Devoto Shopping'.toUpperCase():
+        return 'DEVOTO';
+      case 'Solar de la Abadia'.toUpperCase():
+        return 'SOLAR';
       case 'Caballito'.toUpperCase():
         return 'CABALLITO';
       case 'Patio Olmos'.toUpperCase():
@@ -155,5 +168,23 @@ export class MorphWebService {
     }
 
     return sucursal;
+  }
+
+  getNotificacions() {
+    return this.notificacionesDb.find({ take: 20 });
+  }
+
+  deleteNotifications(orden: string) {
+    return this.notificacionesDb.delete({ orden });
+  }
+
+  async existInApprovation(id_canal: string) {
+    const orden = await this.aprobacionDb.findBy({ id_canal });
+    return orden.length != 0;
+  }
+
+  async existInOperations(id_canal: string) {
+    const orden = await this.webDb.findBy({ id_canal });
+    return orden.length != 0;
   }
 }

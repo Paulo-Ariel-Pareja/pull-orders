@@ -10,6 +10,8 @@ import { AppService } from './app.service';
 import { TiendaNubeModule } from './tienda-nube/tienda-nube.module';
 import { MorphWebModule } from './morph-web/morph-web.module';
 import { MorphWeb } from './morph-web/entities/morph-web.entity';
+import { Web } from './morph-web/entities/web.entity';
+import { Notificaciones } from './morph-web/entities/notificaciones.entity';
 
 @Module({
   imports: [
@@ -26,7 +28,9 @@ import { MorphWeb } from './morph-web/entities/morph-web.entity';
         username: configService.get<string>('dbConfig.username'),
         password: configService.get<string>('dbConfig.password'),
         database: configService.get<string>('dbConfig.database'),
-        entities: [MorphWeb],
+        entities: [MorphWeb, Web, Notificaciones],
+        acquireTimeout: 1000000,
+        connectTimeout: 1000000,
         //synchronize: true,
       }),
       inject: [ConfigService],

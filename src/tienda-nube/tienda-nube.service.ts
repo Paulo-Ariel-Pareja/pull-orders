@@ -60,8 +60,8 @@ export class TiendaNubeService {
         )
         .pipe(
           catchError((error: AxiosError) => {
-            this.logger.error(error.response.data);
-            throw 'An error happened!';
+            this.logger.error(error);
+            throw error;
           }),
         ),
     );
@@ -84,8 +84,28 @@ export class TiendaNubeService {
     const { data } = await firstValueFrom(
       this.httpService.get<Order[]>(url, headersRequest).pipe(
         catchError((error: AxiosError) => {
-          this.logger.error(error.response.data);
-          throw 'An error happened!';
+          this.logger.error(error);
+          throw error;
+        }),
+      ),
+    );
+    return data;
+  }
+
+  async getOneOperation(orden: string): Promise<Order> {
+    const headersRequest: AxiosRequestConfig = {
+      headers: {
+        'Content-Type': 'application/json',
+        'User-Agent': this.agent,
+        Authentication: `bearer ${this.bearer}`,
+      },
+    };
+    const url = `https://api.tiendanube.com/v1/${this.userId}/orders/${orden}`;
+    const { data } = await firstValueFrom(
+      this.httpService.get(url, headersRequest).pipe(
+        catchError((error: AxiosError) => {
+          this.logger.error(error);
+          throw error;
         }),
       ),
     );
