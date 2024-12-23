@@ -12,7 +12,7 @@ export class CronjobWebService {
     private readonly morphService: MorphWebService,
   ) {}
 
-  @Cron(CronExpression.EVERY_MINUTE)
+  @Cron(CronExpression.EVERY_5_MINUTES)
   async handleNewCron() {
     try {
       this.logger.debug('obtener operaciones en tabla de notificaciones');
