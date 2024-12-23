@@ -174,8 +174,8 @@ export class MorphWebService {
     return this.notificacionesDb.find({ take: 20 });
   }
 
-  deleteNotifications(orden: string) {
-    return this.notificacionesDb.delete({ orden });
+  deleteNotifications(tn_id: string) {
+    return this.notificacionesDb.delete({ tn_id });
   }
 
   async existInApprovation(id_canal: string) {

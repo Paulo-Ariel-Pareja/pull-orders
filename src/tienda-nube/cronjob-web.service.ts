@@ -21,34 +21,29 @@ export class CronjobWebService {
       this.logger.log(`notificaciones leidas: ${notifications.length}`);
 
       for (const notification of notifications) {
-        const { orden } = notification;
+        const { tn_id } = notification;
         try {
           this.logger.debug(
             'consulta tabla autorizaciones para validar si ya existe',
           );
-          const authExist = await this.morphService.existInApprovation(orden);
-          if (authExist) {
-            await this.deleteNotification(orden);
-            return;
-          }
+          const authExist = await this.morphService.existInApprovation(tn_id);
+
           this.logger.debug(
             'consulta tabla operaciones para validar si ya existe',
           );
           const operationExist =
-            await this.morphService.existInOperations(orden);
-          if (operationExist) {
-            await this.deleteNotification(orden);
-            return;
+            await this.morphService.existInOperations(tn_id);
+
+          if (!authExist && !operationExist) {
+            this.logger.debug('obtener datos de orden desde proveedor');
+            const rawOrder = await this.tiendaNube.getOneOperation(tn_id);
+
+            this.logger.debug('Guardar en la base de datos el pedido');
+            await this.morphService.create(rawOrder);
           }
 
-          this.logger.debug('obtener datos de orden desde proveedor');
-          const rawOrder = await this.tiendaNube.getOneOperation(orden);
-
-          this.logger.debug('Guardar en la base de datos el pedido');
-          await this.morphService.create(rawOrder);
-
           this.logger.debug('quitar notificacion');
-          await this.deleteNotification(orden);
+          await this.deleteNotification(tn_id);
         } catch (error) {
           this.logger.error(error);
         }
