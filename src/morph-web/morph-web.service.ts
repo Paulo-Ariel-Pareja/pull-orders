@@ -114,6 +114,7 @@ export class MorphWebService {
       case 'Pickit - Envio a domicilio':
         return 'PICKIT';
       case 'Punto de retiro':
+      case 'Envío Nube - Correo Argentino Clásico a domicilio':
         return 'CORREO ARGENTINO';
     }
 
@@ -124,7 +125,7 @@ export class MorphWebService {
         return 'SOLAR';
       case 'Caballito'.toUpperCase():
         return 'CABALLITO';
-      case 'Patio Olmos'.toUpperCase():
+      case 'Patio Olmos Shopping'.toUpperCase():
         return 'CORDOBA';
       case 'Flores'.toUpperCase():
         return 'FLORES';
@@ -138,18 +139,24 @@ export class MorphWebService {
         return 'OLAZABAL';
       case 'Olleros'.toUpperCase():
         return 'OLLEROS';
-      case 'Alto Rosario'.toUpperCase():
+      case 'Portal Rosario'.toUpperCase():
+        return 'PORTAL ROSARIO';
+      case 'Alto Rosario Shopping'.toUpperCase():
         return 'ROSARIO';
       case 'Microcentro'.toUpperCase():
         return 'SARMIENTO';
-      case 'Shopping del Siglo'.toUpperCase():
-        return 'SIGLO';
-      case 'Solar'.toUpperCase():
+      case 'Solar De La Abadia'.toUpperCase():
         return 'SOLAR';
       case 'Tortugas Open Mall'.toUpperCase():
         return 'TORTUGAS';
-      case 'Triunvirato'.toUpperCase():
-        return 'TRIUNVIRATO';
+      case 'Unicenter'.toUpperCase():
+        return 'UNICENTER';
+      case 'Alto Comahue Shopping'.toUpperCase():
+        return 'COMAHUE';
+      case 'Plaza Oeste Shopping'.toUpperCase():
+        return 'PLAZA OESTE';
+      case 'Portal Patagonia'.toUpperCase():
+        return 'PORTAL NEUQUEN';
       case 'Recoleta Urban'.toUpperCase():
         return 'URBAN';
       default:
