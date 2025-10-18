@@ -111,10 +111,10 @@ export class MorphWebService {
     if (!opcion) return sucursal;
 
     switch (opcion.toUpperCase()) {
-      case 'Pickit - Envio a domicilio':
+      case 'Pickit - Envio a domicilio'.toUpperCase():
         return 'PICKIT';
-      case 'Punto de retiro':
-      case 'Envío Nube - Correo Argentino Clásico a domicilio':
+      case 'Punto de retiro'.toUpperCase():
+      case 'Envío Nube - Correo Argentino Clásico a domicilio'.toUpperCase():
         return 'CORREO ARGENTINO';
     }
 
